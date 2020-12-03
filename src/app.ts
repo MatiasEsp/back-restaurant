@@ -1,5 +1,6 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
 import { Server } from 'http';
+import apisRoutesLoader from './common/apisRoutesLoader';
 
 export default class App {
   private app: Application;
@@ -16,6 +17,8 @@ export default class App {
       res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
       next();
     });
+
+    apisRoutesLoader(this.app);
 
     this.app.use(`/`, (req: Request, res: Response, next: NextFunction) => {
       res.json(`··· 404 Undefined ···`);
