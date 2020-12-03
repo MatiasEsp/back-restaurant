@@ -3,6 +3,9 @@ import { Server } from 'http';
 import apisRoutesLoader from './common/apisRoutesLoader';
 import bodyParser from 'body-parser';
 
+// const libs = require('./libs')
+// libs.forEach(lib => require(`./libs/${lib}`)(app))
+
 export default class App {
   private app: Application;
 
