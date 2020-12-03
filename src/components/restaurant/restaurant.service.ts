@@ -52,8 +52,8 @@ const parseListRestaurantModel = async (iRestaurants: any[]): Promise<Restaurant
 }
 
 const parseRestaurantModel = (iRestaurant: IRestaurant): RestaurantModel => {
-  const { name, kingOfRestaurant, songs } = iRestaurant;
-  const quotationDTO: RestaurantModel = new RestaurantModel(name, kingOfRestaurant, songs);
+  const { name, kindOfRestaurant, songs } = iRestaurant;
+  const quotationDTO: RestaurantModel = new RestaurantModel(name, kindOfRestaurant, songs);
   return quotationDTO;
 }
 

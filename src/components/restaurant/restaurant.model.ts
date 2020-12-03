@@ -1,11 +1,11 @@
 export class RestaurantModel {
   name: string;
-  kingOfRestaurant: string;
+  kindOfRestaurant: string;
   songs: string[];
 
-  constructor(name: string, kingOfRestaurant: string, songs: string[]) {
+  constructor(name: string, kindOfRestaurant: string, songs: string[]) {
     this.name = name;
-    this.kingOfRestaurant = kingOfRestaurant;
+    this.kindOfRestaurant = kindOfRestaurant;
     this.songs = songs;
   }
 }

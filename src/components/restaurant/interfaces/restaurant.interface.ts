@@ -1,5 +1,5 @@
 export interface IRestaurant {
   name: string;
-  kingOfRestaurant: string;
+  kindOfRestaurant: string;
   songs: string[];
 }
