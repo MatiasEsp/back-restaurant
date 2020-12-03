@@ -1,6 +1,8 @@
 import { Application } from 'express';
 
-export default (app: Application): void => {
+import restaurantApi from '../components/restaurant/restaurant.api'
 
+export default (app: Application): void => {
+  app.use(restaurantApi);
   // ... other apis
 };
