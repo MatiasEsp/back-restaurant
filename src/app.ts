@@ -1,8 +1,7 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
 import { Server } from 'http';
 import apisRoutesLoader from './common/apisRoutesLoader';
-
-const bodyParser = require('body-parser');
+import bodyParser from 'body-parser';
 
 export default class App {
   private app: Application;
@@ -13,6 +12,7 @@ export default class App {
 
   public init(): void {
 
+    /** CORS */
     this.app.use(function (req: Request, res: Response, next: NextFunction) {
       res.header('Access-Control-Allow-Origin', '*');
       res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, authorization');

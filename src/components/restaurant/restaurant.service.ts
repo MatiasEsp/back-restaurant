@@ -10,15 +10,6 @@ const serviceGetRestaurantAll = async (query?: Filter): Promise<RestaurantDto[]>
   return await RestaurantRespository.getRestaruantAll();
 }
 
-const serviceGetRestaurantAllOfKindOfRestaurant = async (kindOfRestaurant: string): Promise<RestaurantDto[]> => {
-  const data = await (await hardcodeJsonRestaurant()).filter(item => item.kindOfRestaurant.toUpperCase() === kindOfRestaurant.toUpperCase());
-  return data;
-}
-
-const hardcodeJsonRestaurant = async (): Promise<RestaurantModel[]> => {
-  return RestaurantRespository.getRestaruantAll();
-}
-
 const saveNewRestaurant = async (iRestaurant: IRestaurant): Promise<RestaurantModel> => {
   const buildRestaurant: RestaurantModel = parseRestaurantModel(iRestaurant);
   if (!await isRestaurantUniqueName(buildRestaurant)) {
@@ -36,30 +27,6 @@ const isRestaurantUniqueName = async (restaurant: RestaurantModel): Promise<bool
   return !restaurantCoincidente;
 }
 
-const hardcodeJsonSaveRestaurant = async (newRestaurant: RestaurantModel): Promise<RestaurantModel> => {
-  const saveRestaurant = RestaurantRespository.saveRestaruant(newRestaurant);
-  if (!saveRestaurant) {
-    throw Error('Error en guardar');
-  }
-  return saveRestaurant;
-}
-
-const hardcodeSaveJsonRestaurant = async (newData: any): Promise<boolean> => {
-  try {
-    ;
-    return true;
-  } catch (error) {
-    return false;
-  }
-}
-
-const parseListRestaurantModel = async (iRestaurants: any[]): Promise<RestaurantModel[]> => {
-  if (!iRestaurants || !iRestaurants.length) {
-    return [];
-  }
-  return iRestaurants.map((raw: IRestaurant) => parseRestaurantModel(raw));
-}
-
 const parseRestaurantModel = (iRestaurant: IRestaurant): RestaurantModel => {
   const { name, kindOfRestaurant, songs } = iRestaurant;
   const quotationDTO: RestaurantModel = new RestaurantModel(name, kindOfRestaurant, songs);
@@ -68,6 +35,5 @@ const parseRestaurantModel = (iRestaurant: IRestaurant): RestaurantModel => {
 
 export const RestaurantService = {
   serviceGetRestaurantAll,
-  serviceGetRestaurantAllOfKindOfRestaurant,
   saveNewRestaurant,
 };
