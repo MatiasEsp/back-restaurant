@@ -13,8 +13,17 @@ const hardcodeJsonRestaurant = async (): Promise<RestaurantModel[]> => {
 
 const saveNewRestaurant = async (iRestaurant: IRestaurant): Promise<RestaurantModel> => {
   const buildRestaurant: RestaurantModel = parseRestaurantModel(iRestaurant);
+  if (!await isRestaurantUniqueName(buildRestaurant)) {
+    throw Error('Error por reaturant unico');
+  }
   const newRestaurant = hardcodeJsonSaveRestaurant(buildRestaurant);
   return newRestaurant;
+}
+
+const isRestaurantUniqueName = async (restaurant: RestaurantModel): Promise<boolean> => {
+  const listRestaurantJson = await hardcodeJsonRestaurant();
+  const restaurantCoincidente = listRestaurantJson.find(bdRestaurant => bdRestaurant.name.toUpperCase() === restaurant.name.toUpperCase());
+  return !restaurantCoincidente;
 }
 
 const hardcodeJsonSaveRestaurant = async (newRestaurant: RestaurantModel): Promise<RestaurantModel> => {
