@@ -1,11 +1,14 @@
 import { Router } from 'express';
-import { RestaurantController } from './restaurant.controller';
+import { IRestaurantController } from './interfaces/iRestaurant.controller';
 
-const router = Router();
+const router = (controller: IRestaurantController) =>{
+  const router = Router();
+  const api = '/restaurant/v1';
+  
+  router.get(`${api}`, controller.getRestaurantAll);
+  router.post(`${api}`, controller.postRestaurant);
+return router;
+}
 
-const api = '/restaurant/v1';
-
-router.get(`${api}`, RestaurantController.getRestaurantAll);
-router.post(`${api}`, RestaurantController.postRestaurant);
 
 export default router;
