@@ -19,7 +19,7 @@ export class RestaurantRespository {
   }
 
   static saveRestaruant(restaurant: RestaurantModel) {
-    restaurant.id = this.data.length;
+    restaurant.id = this.data.length + 1;
     this.data.push(restaurant)
     return restaurant;
   }
