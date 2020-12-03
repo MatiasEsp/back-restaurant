@@ -6,6 +6,6 @@ const router = Router();
 const api = '/restaurant/v1';
 
 router.get(`${api}`, RestaurantController.getRestaurantAll);
-router.get(`${api}`, RestaurantController.postRestaurant);
+router.post(`${api}`, RestaurantController.postRestaurant);
 
 export default router;

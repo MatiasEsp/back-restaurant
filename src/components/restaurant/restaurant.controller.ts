@@ -15,7 +15,9 @@ const getRestaurantAll = async (req: Request, res: Response, next: NextFunction)
 };
 const postRestaurant = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    return res.status(201).json();
+    const newRestaurantDto: RestaurantDto = req.body as IRestaurant;
+    const newrestaurant: RestaurantModel = await RestaurantService.saveNewRestaurant(newRestaurantDto);
+    return res.status(201).json(newrestaurant);
   } catch (error) {
     return res.status(400).json({ status: 'error', msjError: '' });
   }
