@@ -1,3 +1,4 @@
+import { RestaurantRespository } from '../../repository/repository.restaurant';
 import { RestaurantDto } from './dtos/restaurant.dto';
 import { IRestaurant } from './interfaces/restaurant.interface';
 import { RestaurantModel } from './restaurant.model';
@@ -12,8 +13,7 @@ const serviceGetRestaurantAllOfKindOfRestaurant = async (kindOfRestaurant: strin
 }
 
 const hardcodeJsonRestaurant = async (): Promise<RestaurantModel[]> => {
-  const listRestaurantJson = require('./hardcodeRestaurant.json');
-  return await parseListRestaurantModel(listRestaurantJson);
+  return RestaurantRespository.getRestaruantAll();
 }
 
 const saveNewRestaurant = async (iRestaurant: IRestaurant): Promise<RestaurantModel> => {
@@ -26,23 +26,21 @@ const saveNewRestaurant = async (iRestaurant: IRestaurant): Promise<RestaurantMo
 }
 
 const isRestaurantUniqueName = async (restaurant: RestaurantModel): Promise<boolean> => {
-  const listRestaurantJson = await hardcodeJsonRestaurant();
-  const restaurantCoincidente = listRestaurantJson.find(bdRestaurant => bdRestaurant.name.toUpperCase() === restaurant.name.toUpperCase());
+  const restaurantCoincidente = RestaurantRespository.getRestaruantByName(restaurant.name);
   return !restaurantCoincidente;
 }
 
 const hardcodeJsonSaveRestaurant = async (newRestaurant: RestaurantModel): Promise<RestaurantModel> => {
-  const listRestaurantJson = await hardcodeJsonRestaurant();
-  listRestaurantJson.push(newRestaurant);
-  const exitoSave = hardcodeSaveJsonRestaurant(listRestaurantJson);
-  if (!exitoSave) {
+  const saveRestaurant = RestaurantRespository.saveRestaruant(newRestaurant);
+  if (!saveRestaurant) {
     throw Error('Error en guardar');
   }
-  return newRestaurant;
+  return saveRestaurant;
 }
 
 const hardcodeSaveJsonRestaurant = async (newData: any): Promise<boolean> => {
   try {
+    ;
     return true;
   } catch (error) {
     return false;
