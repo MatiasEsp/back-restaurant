@@ -1,19 +1,15 @@
-import { RestaurantRespository } from '../../repository/repository.restaurant';
+import { Filter, RestaurantRespository } from '../../repository/repository.restaurant';
 import { RestaurantDto } from './dtos/restaurant.dto';
 import { IRestaurant } from './interfaces/restaurant.interface';
 import { RestaurantModel } from './restaurant.model';
 
 const serviceGetRestaurantAll = async (): Promise<RestaurantDto[]> => {
-  return await hardcodeJsonRestaurant();
+  return await RestaurantRespository.getRestaruantAll();
 }
 
 const serviceGetRestaurantAllOfKindOfRestaurant = async (kindOfRestaurant: string): Promise<RestaurantDto[]> => {
-  const data = await (await hardcodeJsonRestaurant()).filter(item => item.kindOfRestaurant.toUpperCase() === kindOfRestaurant.toUpperCase());
+  const data = await (await RestaurantRespository.getRestaruantAll()).filter(item => item.kindOfRestaurant.toUpperCase() === kindOfRestaurant.toUpperCase());
   return data;
-}
-
-const hardcodeJsonRestaurant = async (): Promise<RestaurantModel[]> => {
-  return RestaurantRespository.getRestaruantAll();
 }
 
 const saveNewRestaurant = async (iRestaurant: IRestaurant): Promise<RestaurantModel> => {
@@ -36,22 +32,6 @@ const hardcodeJsonSaveRestaurant = async (newRestaurant: RestaurantModel): Promi
     throw Error('Error en guardar');
   }
   return saveRestaurant;
-}
-
-const hardcodeSaveJsonRestaurant = async (newData: any): Promise<boolean> => {
-  try {
-    ;
-    return true;
-  } catch (error) {
-    return false;
-  }
-}
-
-const parseListRestaurantModel = async (iRestaurants: any[]): Promise<RestaurantModel[]> => {
-  if (!iRestaurants || !iRestaurants.length) {
-    return [];
-  }
-  return iRestaurants.map((raw: IRestaurant) => parseRestaurantModel(raw));
 }
 
 const parseRestaurantModel = (iRestaurant: IRestaurant): RestaurantModel => {
