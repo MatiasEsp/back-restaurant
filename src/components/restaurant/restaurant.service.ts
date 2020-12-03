@@ -1,10 +1,13 @@
-import { RestaurantRespository } from '../../repository/repository.restaurant';
+import { Filter, RestaurantRespository } from '../../repository/repository.restaurant';
 import { RestaurantDto } from './dtos/restaurant.dto';
 import { IRestaurant } from './interfaces/restaurant.interface';
 import { RestaurantModel } from './restaurant.model';
 
-const serviceGetRestaurantAll = async (): Promise<RestaurantDto[]> => {
-  return await hardcodeJsonRestaurant();
+const serviceGetRestaurantAll = async (query?: Filter): Promise<RestaurantDto[]> => {
+  if (!!query && !!query.kindOfRestaurant) {
+    return await RestaurantRespository.getRestaruantAllFilter(query.kindOfRestaurant);
+  }
+  return await RestaurantRespository.getRestaruantAll();
 }
 
 const serviceGetRestaurantAllOfKindOfRestaurant = async (kindOfRestaurant: string): Promise<RestaurantDto[]> => {
@@ -21,8 +24,11 @@ const saveNewRestaurant = async (iRestaurant: IRestaurant): Promise<RestaurantMo
   if (!await isRestaurantUniqueName(buildRestaurant)) {
     throw Error('Error por reaturant unico');
   }
-  const newRestaurant = hardcodeJsonSaveRestaurant(buildRestaurant);
-  return newRestaurant;
+  const saveRestaurant = RestaurantRespository.saveRestaruant(buildRestaurant);
+  if (!saveRestaurant) {
+    throw Error('Error en guardar');
+  }
+  return saveRestaurant;
 }
 
 const isRestaurantUniqueName = async (restaurant: RestaurantModel): Promise<boolean> => {
