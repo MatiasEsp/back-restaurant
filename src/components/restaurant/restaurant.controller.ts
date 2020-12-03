@@ -7,6 +7,12 @@ import { RestaurantService } from './restaurant.service';
 
 const getRestaurantAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const query = req.query;
+    if (!!query && !!query.kindOfRestaurant) {
+      const kindOfRestaurant: string = query.kindOfRestaurant as any as string;
+      const listRestaurantDto: RestaurantDto[] = await RestaurantService.serviceGetRestaurantAllOfKindOfRestaurant(kindOfRestaurant);
+      return res.json(listRestaurantDto);
+    }
     const listRestaurantDto: RestaurantDto[] = await RestaurantService.serviceGetRestaurantAll();
     return res.json(listRestaurantDto);
   } catch (error) {

@@ -6,6 +6,11 @@ const serviceGetRestaurantAll = async (): Promise<RestaurantDto[]> => {
   return await hardcodeJsonRestaurant();
 }
 
+const serviceGetRestaurantAllOfKindOfRestaurant = async (kindOfRestaurant: string): Promise<RestaurantDto[]> => {
+  const data = await (await hardcodeJsonRestaurant()).filter(item => item.kindOfRestaurant.toUpperCase() === kindOfRestaurant.toUpperCase());
+  return data;
+}
+
 const hardcodeJsonRestaurant = async (): Promise<RestaurantModel[]> => {
   const listRestaurantJson = require('./hardcodeRestaurant.json');
   return await parseListRestaurantModel(listRestaurantJson);
@@ -59,5 +64,6 @@ const parseRestaurantModel = (iRestaurant: IRestaurant): RestaurantModel => {
 
 export const RestaurantService = {
   serviceGetRestaurantAll,
+  serviceGetRestaurantAllOfKindOfRestaurant,
   saveNewRestaurant,
 };
